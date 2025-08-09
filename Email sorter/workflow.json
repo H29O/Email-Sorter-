@@ -1,0 +1,505 @@
+{
+  "name": "Email sorter",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 5,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        344
+      ],
+      "id": "e7f5fe96-ded0-4a02-b92a-868c0439a5c3",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=subject: {{ $json.Subject }}\nbody: {{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Promotion",
+              "description": "This is any email looking to sell me things"
+            },
+            {
+              "category": "Personal",
+              "description": "This is any email sent from family , friends , etc."
+            },
+            {
+              "category": "Socials",
+              "description": "this is any email sent from a social media site like Youtube , Instagram ,etc ."
+            },
+            {
+              "category": "Recruitments",
+              "description": "This is any email offering me job or notifying about job opportunities etc ."
+            },
+            {
+              "category": "Orders",
+              "description": "This is any mail that gives me information about my order like delivered , delayed , order placed , etc"
+            },
+            {
+              "category": "Miscellaneous",
+              "description": "Any mail not in any of the above mentioned categories"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -256,
+        344
+      ],
+      "id": "9ba12233-8cd3-4048-998f-46865e3a3cf8",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        696
+      ],
+      "id": "27300397-bb14-4e8b-a944-a2397fdeb590",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5DnHG5V8GQ4hp5Yj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id}}",
+        "labelIds": [
+          "Label_1842835206697517456"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        -256
+      ],
+      "id": "7e410473-030d-49ea-87b4-14d5d4266890",
+      "name": "Add label to message",
+      "webhookId": "888adb7c-bcb2-4ed2-a480-2378f5a6e69b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_8617327135720831282"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        824
+      ],
+      "id": "c87bb37b-46b0-425f-990b-bd942cf204c2",
+      "name": "Add label to message1",
+      "webhookId": "62ac9f06-018f-47f0-b55e-c150a7f7285c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id}}",
+        "labelIds": [
+          "Label_2514662240645314218"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        632
+      ],
+      "id": "bbecf215-1179-43df-a8ac-9be38f65b817",
+      "name": "Add label to message2",
+      "webhookId": "888adb7c-bcb2-4ed2-a480-2378f5a6e69b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id}}",
+        "labelIds": [
+          "Label_4072102662549482950"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        40
+      ],
+      "id": "33c1d1b5-a1e9-4a96-bfb0-1719046b725d",
+      "name": "Add label to message3",
+      "webhookId": "888adb7c-bcb2-4ed2-a480-2378f5a6e69b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id}}",
+        "labelIds": [
+          "Label_7433124896559544972"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        240
+      ],
+      "id": "81214fcc-33fe-4fbd-baa5-a4fb275de161",
+      "name": "Add label to message4",
+      "webhookId": "888adb7c-bcb2-4ed2-a480-2378f5a6e69b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id}}",
+        "labelIds": [
+          "Label_9112721020509682878"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        144,
+        440
+      ],
+      "id": "b72bb3ac-8505-4890-a5c7-0685ee069e54",
+      "name": "Add label to message5",
+      "webhookId": "888adb7c-bcb2-4ed2-a480-2378f5a6e69b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsRead",
+        "messageId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        456,
+        -256
+      ],
+      "id": "f26f709a-112a-43de-a5e8-a5c2bb18a08b",
+      "name": "Mark a message as read",
+      "webhookId": "445d1f93-3283-4bb1-8c59-5f552d70e778",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an intelligent AI bot that summarizes messages. Given below is the subject and body of the mail to be summarized.\nsubject :{{ $('Gmail Trigger').item.json.Subject }}\nbody:{{ $('Gmail Trigger').item.json.snippet }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        440
+      ],
+      "id": "50f5e69b-489b-4aef-a3c4-db02e36a5064",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        464,
+        664
+      ],
+      "id": "75216ed4-83de-45d1-85b5-c5a432d471ff",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5DnHG5V8GQ4hp5Yj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "Reply",
+        "message": "={{ $json.output }}",
+        "options": {
+          "threadId": "={{ $('Gmail Trigger').item.json.threadId }}",
+          "sendTo": "={{ $('Gmail Trigger').item.json.From }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        768,
+        40
+      ],
+      "id": "cd8070f1-e34c-4b60-ba57-75aee3049619",
+      "name": "Create a draft",
+      "webhookId": "f4a53578-1981-4d4f-b167-d50e4d4ce62c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Aijp5oGOLsOYNoPG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an intelligent AI bot that replies to personal emails in a informal but respectful tone (don't add subject). Below is the email to be replied to :\nsubject :{{ $('Gmail Trigger').item.json.Subject }}\nbody:{{ $('Gmail Trigger').item.json.snippet }}\nthis email is from :{{ $('Gmail Trigger').item.json.From }}\nalso please sign off as :\nRegards , \nHeet\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        -64
+      ],
+      "id": "6d6a303f-df2a-457c-bd0c-65ca4a64f40d",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        464,
+        160
+      ],
+      "id": "35347803-e566-48d1-9428-c598a870ed2f",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "5DnHG5V8GQ4hp5Yj",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Add label to message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message5",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add label to message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label to message": {
+      "main": [
+        [
+          {
+            "node": "Mark a message as read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label to message2": {
+      "main": [
+        []
+      ]
+    },
+    "Add label to message5": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label to message3": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "04c9a396-31d3-4a0f-baa5-69a0c402dea2",
+  "meta": {
+    "instanceId": "7825137b99d389f7650201d54a6d8eb523ce7069708c2b0055798ae9aeb61532"
+  },
+  "id": "1ZcJ6aAYi1l0TWIa",
+  "tags": []
+}
